@@ -1,0 +1,811 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Agência Eden | Gestão completa para criadoras de conteúdo</title>
+<meta name="description" content="Estratégia, marketing, chatting e gestão completa de perfil para criadoras de conteúdo. Você cria, a gente cuida de todo o resto. Aplique agora.">
+<link rel="icon" href="assets/logo-nova.png" type="image/png">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="Agência Eden">
+<meta property="og:title" content="Agência Eden | Gestão completa para criadoras de conteúdo">
+<meta property="og:description" content="Você cria o conteúdo. A gente cuida da estratégia, do marketing e do faturamento.">
+<meta property="og:image" content="assets/logo-nova.png">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+/* ============ base ============ */
+*,*::before,*::after{box-sizing:border-box}
+html,body,h1,h2,h3,h4,p,figure,ul,ol,li{margin:0;padding:0}
+ul,ol{list-style:none}
+img{display:block;max-width:100%}
+a{color:inherit}
+
+:root{
+  --bg:#fdeff8;          /* rosa pastel claro */
+  --bg-soft:#fff6fb;
+  --bg-card:#ffffff;
+  --line:rgba(176,140,40,.25);
+  --gold:#c49a2c;
+  --gold-soft:#e9cf7e;
+  --gold-deep:#8f6e1a;
+  --ink:#3b2b46;         /* texto escuro, tom ameixa */
+  --grey:#77687f;
+  --pink-glow:rgba(244,170,220,.55);
+  --blue-glow:rgba(150,200,240,.5);
+
+  --wrap:1160px;
+  --pad:60px;
+  --radius:20px;
+
+  --serif:"Cormorant Garamond",Georgia,serif;
+  --sans:"Manrope",system-ui,-apple-system,"Segoe UI",sans-serif;
+}
+
+html{scroll-behavior:smooth}
+body{
+  font-family:var(--sans);
+  color:var(--ink);
+  background:linear-gradient(160deg,#fbd9ee 0%,#f8ebf7 42%,#d8e8f8 100%) no-repeat var(--bg);
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+  overflow-x:hidden;
+}
+
+.wrap{width:100%;max-width:var(--wrap);margin:0 auto;padding:0 var(--pad)}
+.section{position:relative;padding:92px 0}
+
+/* filete dourado decorativo */
+.accent{display:block;width:64px;height:2px;margin:0 auto;border-radius:2px;
+  background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold-soft) 50%,var(--gold) 70%,transparent)}
+.kicker{display:block;margin-top:18px;text-align:center;font-size:12.5px;font-weight:800;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--gold-deep)}
+.h2{margin-top:14px;text-align:center;font-family:var(--serif);font-size:clamp(34px,4vw,52px);
+  font-weight:600;line-height:1.08;letter-spacing:.01em;color:var(--ink)}
+.h2 em{font-style:normal;color:transparent;
+  background:linear-gradient(110deg,var(--gold),var(--gold-deep) 65%,#6f5512);
+  -webkit-background-clip:text;background-clip:text}
+.lede{margin:18px auto 0;max-width:640px;text-align:center;font-size:17px;font-weight:500;
+  line-height:1.65;color:var(--grey)}
+
+/* botão dourado */
+.btn{position:relative;display:inline-block;padding:18px 44px;border:0;border-radius:999px;
+  font-family:var(--sans);font-size:15.5px;font-weight:800;letter-spacing:.04em;line-height:1;
+  text-transform:uppercase;color:#120d02;text-align:center;text-decoration:none;white-space:nowrap;
+  cursor:pointer;overflow:hidden;isolation:isolate;
+  background:linear-gradient(160deg,#f3dc8e 0%,var(--gold) 45%,var(--gold-deep) 100%);
+  box-shadow:0 2px 6px rgba(59,43,70,.2),0 14px 34px -12px rgba(196,154,44,.5),inset 0 1px 0 rgba(255,245,210,.8);
+  transition:transform .4s cubic-bezier(.22,1,.36,1),box-shadow .4s cubic-bezier(.22,1,.36,1)}
+.btn:hover{transform:translateY(-3px);
+  box-shadow:0 2px 6px rgba(59,43,70,.2),0 22px 44px -14px rgba(196,154,44,.65),inset 0 1px 0 rgba(255,245,210,.8)}
+.btn::after{content:"";position:absolute;top:-30px;bottom:-30px;left:-80%;width:36%;
+  background:linear-gradient(100deg,rgba(255,255,255,0),rgba(255,255,255,.55),rgba(255,255,255,0));
+  transform:skewX(-18deg);opacity:0}
+.btn:hover::after{animation:shine .85s cubic-bezier(.32,0,.2,1)}
+@keyframes shine{0%{left:-80%;opacity:0}15%{opacity:.9}100%{left:180%;opacity:0}}
+
+.btn--ghost{background:transparent;color:var(--gold-deep);
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.5)}
+.btn--ghost:hover{box-shadow:inset 0 0 0 1px var(--gold),0 14px 30px -16px rgba(212,175,55,.4)}
+
+/* reveal on scroll */
+.rise{opacity:0;transform:translateY(20px);
+  transition:opacity .6s cubic-bezier(.22,.7,.3,1),transform .6s cubic-bezier(.22,.7,.3,1)}
+.rise.in{opacity:1;transform:none}
+.stagger>*{opacity:0;transform:translateY(20px);
+  transition:opacity .6s cubic-bezier(.22,.7,.3,1),transform .6s cubic-bezier(.22,.7,.3,1)}
+.stagger.in>*{opacity:1;transform:none}
+.stagger.in>:nth-child(1){transition-delay:.05s}
+.stagger.in>:nth-child(2){transition-delay:.13s}
+.stagger.in>:nth-child(3){transition-delay:.21s}
+.stagger.in>:nth-child(4){transition-delay:.29s}
+.stagger.in>:nth-child(5){transition-delay:.37s}
+.stagger.in>:nth-child(6){transition-delay:.45s}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .rise,.stagger>*{opacity:1;transform:none;transition:none}
+  .btn::after{display:none}
+}
+
+/* ============ header ============ */
+.top{position:sticky;top:0;z-index:60;
+  background:rgba(253,239,248,.82);
+  backdrop-filter:saturate(1.4) blur(14px);-webkit-backdrop-filter:saturate(1.4) blur(14px);
+  border-bottom:1px solid transparent;transition:border-color .3s ease}
+.top::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,.6) 30%,rgba(233,207,126,.8) 50%,rgba(212,175,55,.6) 70%,transparent)}
+.top.stuck{border-bottom-color:var(--line)}
+.top-in{max-width:1240px;margin:0 auto;padding:12px var(--pad);
+  display:flex;align-items:center;gap:28px}
+.brand{display:flex;align-items:center;gap:12px;text-decoration:none;flex:0 0 auto}
+.brand img{height:46px;width:46px;border-radius:50%;object-fit:cover;
+  box-shadow:0 0 0 1px rgba(212,175,55,.4)}
+.brand b{font-family:var(--serif);font-size:21px;font-weight:600;letter-spacing:.12em;
+  text-transform:uppercase;color:var(--gold-deep)}
+.nav{display:flex;align-items:center;gap:28px;flex:1 1 auto;justify-content:center}
+.nav a{position:relative;font-size:14px;font-weight:600;color:var(--grey);
+  text-decoration:none;padding:6px 0;transition:color .25s ease}
+.nav a::after{content:"";position:absolute;left:0;right:100%;bottom:0;height:1.5px;
+  background:linear-gradient(90deg,var(--gold-soft),var(--gold));
+  transition:right .34s cubic-bezier(.22,.7,.3,1)}
+.nav a:hover{color:var(--ink)}
+.nav a:hover::after{right:0}
+.top-cta{flex:0 0 auto;padding:13px 28px;font-size:13px}
+.burger{display:none;border:0;background:none;cursor:pointer;width:44px;height:44px;padding:0;position:relative}
+.burger i,.burger i::before,.burger i::after{position:absolute;left:11px;width:22px;height:2px;
+  border-radius:2px;background:var(--gold-deep);
+  transition:transform .3s cubic-bezier(.22,.7,.3,1),opacity .2s ease}
+.burger i{top:21px}
+.burger i::before{content:"";left:0;top:-7px}
+.burger i::after{content:"";left:0;top:7px}
+.top.open .burger i{background:transparent}
+.top.open .burger i::before{transform:translateY(7px) rotate(45deg)}
+.top.open .burger i::after{transform:translateY(-7px) rotate(-45deg)}
+
+@media (max-width:960px){
+  .nav,.top-cta{display:none}
+  .burger{display:block;margin-left:auto}
+  .top.open .nav{display:flex;position:absolute;left:0;right:0;top:100%;
+    flex-direction:column;align-items:stretch;gap:0;padding:8px var(--pad) 18px;
+    background:var(--bg-soft);border-bottom:1px solid var(--line)}
+  .top.open .nav a{padding:14px 0;border-bottom:1px solid rgba(212,175,55,.1);font-size:16px}
+  .top.open .nav a:last-child{border-bottom:0}
+}
+
+/* ============ hero ============ */
+.hero{position:relative;overflow:hidden;text-align:center;
+  padding:clamp(56px,7vw,100px) 0 clamp(64px,7vw,104px)}
+.hero::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(700px 520px at 50% -10%, var(--pink-glow), transparent 70%),
+    radial-gradient(520px 420px at 8% 100%, var(--blue-glow), transparent 70%),
+    radial-gradient(520px 420px at 92% 100%, rgba(244,170,220,.35), transparent 70%)}
+.hero>*{position:relative;z-index:1}
+.hero-pre{margin:22px auto 10px;font-size:clamp(19px,2.4vw,26px);font-weight:600;color:var(--grey)}
+.hero h1{font-family:var(--sans);font-size:clamp(34px,4.8vw,58px);font-weight:800;
+  line-height:1.12;letter-spacing:-.02em;color:#241a2e;text-wrap:balance;max-width:16ch;margin:0 auto}
+.hero h1 em{font-style:normal;color:transparent;
+  background:linear-gradient(110deg,#e36bbd 10%,#a78be0 50%,#6ea8e8 90%);
+  -webkit-background-clip:text;background-clip:text}
+.hero .lede{max-width:560px}
+.hero .btn{margin-top:32px}
+
+/* VSL */
+.vsl{position:relative;max-width:680px;margin:clamp(28px,3.4vw,40px) auto 0;
+  border-radius:22px;overflow:hidden;background:#000;
+  box-shadow:0 0 0 1px rgba(212,175,55,.35),0 2px 8px rgba(59,43,70,.15),
+    0 30px 60px -28px rgba(59,43,70,.35),0 0 70px -10px rgba(212,175,55,.2)}
+.vsl video{display:block;width:100%;height:auto}
+.vsl-play{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);
+  display:grid;place-items:center;width:76px;height:76px;border:0;border-radius:50%;
+  cursor:pointer;color:#120d02;
+  background:linear-gradient(160deg,#f3dc8e 0%,var(--gold) 45%,var(--gold-deep) 100%);
+  box-shadow:0 2px 10px rgba(59,43,70,.35),0 0 0 8px rgba(255,255,255,.25);
+  transition:transform .3s cubic-bezier(.22,.7,.3,1)}
+.vsl-play:hover{transform:translate(-50%,-50%) scale(1.07)}
+.vsl-play svg{width:30px;height:30px;margin-left:3px}
+.hero-note{margin-top:16px;font-size:13px;color:var(--grey)}
+.hero-note .dot{display:inline-block;width:8px;height:8px;margin-right:8px;border-radius:50%;
+  background:#e879c4;vertical-align:middle;
+  box-shadow:0 0 0 0 rgba(232,121,196,.5);animation:pulse 2.2s ease-out infinite}
+@keyframes pulse{70%{box-shadow:0 0 0 9px rgba(232,121,196,0)}100%{box-shadow:0 0 0 0 rgba(232,121,196,0)}}
+@media (prefers-reduced-motion:reduce){.hero-note .dot{animation:none}}
+
+/* ============ stats ============ */
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(18px,2.4vw,32px);max-width:860px;margin:0 auto}
+.stat{position:relative;text-align:center;padding:0 12px}
+.stat+.stat::before{content:"";position:absolute;left:calc(-1*clamp(9px,1.2vw,16px));
+  top:14%;bottom:14%;width:1px;background:var(--line)}
+.stat b{display:block;font-family:var(--serif);font-size:clamp(40px,4.6vw,58px);font-weight:600;
+  line-height:1;font-variant-numeric:tabular-nums;color:transparent;
+  background:linear-gradient(115deg,var(--gold),var(--gold-deep) 65%,#6f5512);
+  -webkit-background-clip:text;background-clip:text}
+.stat span{display:block;margin-top:10px;font-size:13.5px;font-weight:600;
+  letter-spacing:.04em;color:var(--grey)}
+@media (max-width:700px){
+  .stats{grid-template-columns:1fr;gap:28px}
+  .stat+.stat::before{left:22%;right:22%;top:-14px;bottom:auto;width:auto;height:1px}
+}
+
+/* ============ showcase (prova real) ============ */
+.show{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.1fr);
+  gap:clamp(32px,4.5vw,72px);align-items:center;margin-top:clamp(36px,4vw,52px)}
+.show-txt .accent{margin:0;background:linear-gradient(90deg,var(--gold),var(--gold-soft) 60%,transparent)}
+.show-txt .kicker{text-align:left;margin-top:16px}
+.show-stat{margin-top:18px;font-family:var(--sans);font-size:clamp(30px,3.6vw,44px);
+  font-weight:800;line-height:1.1;letter-spacing:-.02em;color:transparent;
+  background:linear-gradient(110deg,var(--gold) 0%,var(--gold-deep) 65%,#6f5512 100%);
+  -webkit-background-clip:text;background-clip:text}
+.show-txt p{margin-top:16px;max-width:42ch;font-size:16.5px;font-weight:500;
+  line-height:1.65;color:var(--grey)}
+.show-fig{margin:0}
+.show-card{border-radius:22px;overflow:hidden;background:#fff;
+  box-shadow:0 0 0 1px rgba(212,175,55,.35),0 2px 8px rgba(59,43,70,.15),
+    0 30px 60px -28px rgba(59,43,70,.35),0 0 70px -10px rgba(212,175,55,.2)}
+.show-card img,.show-card video{width:100%;height:auto;display:block}
+.show-fig figcaption{margin-top:14px;text-align:center;font-size:13.5px;
+  line-height:1.5;color:var(--grey)}
+@media (max-width:880px){
+  .show{grid-template-columns:minmax(0,1fr);gap:34px}
+  .show-txt{text-align:center}
+  .show-txt .accent{margin:0 auto;
+    background:linear-gradient(90deg,transparent,var(--gold) 30%,var(--gold-soft) 50%,var(--gold) 70%,transparent)}
+  .show-txt .kicker{text-align:center}
+  .show-txt p{margin-inline:auto}
+  .show-card{max-width:440px;margin:0 auto}
+}
+
+/* ============ cards / grids ============ */
+.grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:clamp(18px,2.2vw,26px);margin-top:clamp(36px,4vw,52px)}
+.grid--4{grid-template-columns:repeat(4,minmax(0,1fr))}
+.card{position:relative;padding:clamp(24px,2.4vw,32px);border-radius:var(--radius);
+  background:linear-gradient(170deg,var(--bg-card),var(--bg-soft));
+  box-shadow:inset 0 0 0 1px var(--line);
+  transition:box-shadow .34s ease,translate .34s cubic-bezier(.22,.7,.3,1)}
+.card:hover{translate:0 -5px;
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.45),0 24px 48px -28px rgba(59,43,70,.3)}
+.card-n{display:block;font-family:var(--serif);font-size:15px;font-weight:700;
+  letter-spacing:.2em;color:var(--gold-deep)}
+.card h3{margin-top:12px;font-size:18.5px;font-weight:700;letter-spacing:-.01em;color:var(--ink)}
+.card p{margin-top:10px;font-size:15px;line-height:1.68;color:var(--grey)}
+.card .ico{display:grid;place-items:center;width:46px;height:46px;margin-bottom:16px;
+  border-radius:12px;background:rgba(212,175,55,.1);
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.3)}
+.card .ico svg{width:22px;height:22px;stroke:var(--gold-deep)}
+@media (max-width:980px){.grid,.grid--4{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media (max-width:600px){.grid,.grid--4{grid-template-columns:minmax(0,1fr)}}
+
+/* ============ tabela parceria ============ */
+.tbl{margin:clamp(36px,4vw,52px) auto 0;max-width:880px;overflow-x:auto;
+  -webkit-overflow-scrolling:touch;border-radius:var(--radius);
+  background:linear-gradient(170deg,var(--bg-card),var(--bg-soft));
+  box-shadow:inset 0 0 0 1px var(--line)}
+.tbl table{border-collapse:collapse;width:100%;min-width:560px;font-size:15px;line-height:1.55}
+.tbl th,.tbl td{padding:15px 20px;text-align:left;vertical-align:top;
+  border-bottom:1px solid rgba(212,175,55,.1)}
+.tbl thead th{font-size:12px;font-weight:800;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--gold-deep);white-space:nowrap;border-bottom:1px solid rgba(212,175,55,.3)}
+.tbl td{color:var(--grey);font-weight:500}
+.tbl td:first-child{color:var(--ink);font-weight:700}
+.tbl tbody tr:last-child td{border-bottom:0}
+.tbl tbody tr:hover td{background:rgba(212,175,55,.04)}
+
+/* ============ FAQ ============ */
+.faq{max-width:760px;margin:clamp(36px,4vw,52px) auto 0;display:flex;flex-direction:column;gap:14px}
+.faq details{border-radius:16px;overflow:hidden;
+  background:linear-gradient(170deg,var(--bg-card),var(--bg-soft));
+  box-shadow:inset 0 0 0 1px var(--line);transition:box-shadow .3s ease}
+.faq details[open]{box-shadow:inset 0 0 0 1px rgba(212,175,55,.4)}
+.faq summary{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:20px 24px;cursor:pointer;list-style:none;
+  font-size:16px;font-weight:700;color:var(--ink)}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{content:"+";flex:0 0 auto;font-family:var(--serif);font-size:26px;
+  line-height:1;color:var(--gold-deep);transition:transform .3s cubic-bezier(.22,.7,.3,1)}
+.faq details[open] summary::after{transform:rotate(45deg)}
+.faq .a{padding:0 24px 22px;font-size:15px;line-height:1.7;color:var(--grey)}
+
+/* ============ CTA final ============ */
+.end{position:relative;overflow:hidden;text-align:center;padding:clamp(80px,9vw,130px) 0}
+.end::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;
+  background:
+    radial-gradient(640px 480px at 50% 110%, var(--blue-glow), transparent 72%),
+    radial-gradient(480px 380px at 12% -10%, rgba(244,170,220,.4), transparent 70%),
+    radial-gradient(480px 380px at 88% -10%, rgba(244,170,220,.4), transparent 70%)}
+.end::after{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,.5) 30%,rgba(233,207,126,.7) 50%,rgba(212,175,55,.5) 70%,transparent)}
+.end>*{position:relative;z-index:1}
+.end .btn{margin-top:34px}
+
+/* ============ modal de aplicação ============ */
+.modal{position:fixed;inset:0;z-index:100;display:grid;place-items:center;
+  padding:20px;opacity:0;visibility:hidden;
+  transition:opacity .3s ease,visibility .3s}
+.modal.open{opacity:1;visibility:visible}
+.modal-bg{position:absolute;inset:0;background:rgba(59,33,66,.5);
+  backdrop-filter:blur(6px);-webkit-backdrop-filter:blur(6px)}
+.modal-card{position:relative;z-index:1;width:100%;max-width:420px;
+  max-height:calc(100dvh - 40px);overflow-y:auto;
+  padding:30px 28px 26px;border-radius:24px;
+  background:linear-gradient(170deg,#ffffff,var(--bg-soft));
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.35),0 2px 10px rgba(59,43,70,.18),
+    0 40px 80px -30px rgba(59,43,70,.45),0 0 90px -20px rgba(212,175,55,.25);
+  transform:translateY(16px) scale(.98);
+  transition:transform .34s cubic-bezier(.22,.9,.3,1)}
+.modal.open .modal-card{transform:none}
+.modal-x{position:absolute;top:14px;right:14px;width:36px;height:36px;
+  border:0;border-radius:50%;background:rgba(212,175,55,.08);cursor:pointer;
+  color:var(--grey);font-size:18px;line-height:1;
+  transition:color .2s ease,background .2s ease}
+.modal-x:hover{color:var(--ink);background:rgba(212,175,55,.18)}
+.modal-card h3{font-family:var(--serif);font-size:26px;font-weight:600;
+  text-align:center;color:var(--ink)}
+.modal-card h3 em{font-style:normal;color:transparent;
+  background:linear-gradient(110deg,var(--gold),var(--gold-deep) 65%,#6f5512);
+  -webkit-background-clip:text;background-clip:text}
+.modal-sub{margin-top:8px;text-align:center;font-size:13.5px;line-height:1.5;color:var(--grey)}
+.f-field{margin-top:16px}
+.f-field label{display:block;margin-bottom:7px;font-size:13px;font-weight:700;
+  letter-spacing:.02em;color:var(--ink)}
+.f-field input{width:100%;padding:13px 15px;border-radius:12px;border:0;
+  font:inherit;font-size:15px;color:var(--ink);
+  background:rgba(255,255,255,.85);
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.22);
+  transition:box-shadow .2s ease;outline:none}
+.f-field input::placeholder{color:rgba(119,104,127,.55)}
+.f-field input:focus{box-shadow:inset 0 0 0 1.5px var(--gold)}
+.f-phone{display:flex;gap:8px}
+.f-phone .ddd{flex:0 0 auto;display:flex;align-items:center;padding:0 14px;
+  border-radius:12px;font-size:15px;font-weight:700;color:var(--gold-deep);
+  background:rgba(212,175,55,.08);box-shadow:inset 0 0 0 1px rgba(212,175,55,.22)}
+.f-phone input{flex:1 1 auto;min-width:0}
+.f-row{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:420px){.f-row{grid-template-columns:1fr}}
+.f-consent{display:flex;gap:10px;margin-top:18px;cursor:pointer}
+.f-consent input{flex:0 0 auto;width:17px;height:17px;margin-top:2px;accent-color:var(--gold)}
+.f-consent span{font-size:12px;line-height:1.55;color:var(--grey)}
+.f-send{width:100%;margin-top:20px;padding:17px 20px;font-size:14.5px}
+.f-send:disabled{opacity:.45;cursor:not-allowed;transform:none!important}
+.f-send:disabled::after{display:none}
+.f-ok{display:none;text-align:center;padding:26px 6px 10px}
+.f-ok .ico-ok{display:grid;place-items:center;width:64px;height:64px;margin:0 auto 18px;
+  border-radius:50%;background:rgba(212,175,55,.1);
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.4)}
+.f-ok .ico-ok svg{width:30px;height:30px;stroke:var(--gold-deep)}
+.f-ok h4{font-family:var(--serif);font-size:24px;font-weight:600;color:var(--ink)}
+.f-ok p{margin-top:10px;font-size:14.5px;line-height:1.6;color:var(--grey)}
+.modal.sent form{display:none}
+.modal.sent .f-ok{display:block}
+body.lock{overflow:hidden}
+
+/* ============ footer ============ */
+.foot{position:relative;background:linear-gradient(135deg,#f9d5ec,#cfe3f7);padding:clamp(44px,5vw,64px) 0 0}
+.foot::before{content:"";position:absolute;left:0;right:0;top:0;height:1px;
+  background:linear-gradient(90deg,transparent,rgba(212,175,55,.5) 30%,rgba(233,207,126,.7) 50%,rgba(212,175,55,.5) 70%,transparent)}
+.foot-in{max-width:var(--wrap);margin:0 auto;padding:0 var(--pad);
+  display:grid;grid-template-columns:auto 1fr;gap:clamp(34px,5vw,72px);align-items:start}
+.foot-brand{display:flex;flex-direction:column;align-items:flex-start;gap:16px}
+.foot-brand img{height:84px;width:84px;border-radius:50%;
+  box-shadow:0 0 0 1px rgba(212,175,55,.35)}
+.foot-brand p{font-size:14px;line-height:1.6;color:var(--grey);max-width:30ch}
+.foot-cols{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:clamp(22px,3vw,44px)}
+.foot-col .kicker{margin-top:0;text-align:left;color:var(--gold-deep)}
+.foot-col ul{margin-top:14px;display:flex;flex-direction:column;gap:10px}
+.foot-col a{font-size:14px;font-weight:500;color:var(--grey);text-decoration:none;
+  transition:color .24s ease}
+.foot-col a:hover{color:var(--gold-deep)}
+.foot-base{max-width:var(--wrap);margin:clamp(34px,4vw,48px) auto 0;
+  padding:18px var(--pad) 26px;border-top:1px solid rgba(212,175,55,.1)}
+.foot-base p{font-size:12.5px;color:rgba(119,104,127,.75)}
+@media (max-width:860px){.foot-in{grid-template-columns:1fr}}
+
+@media (max-width:900px){
+  :root{--pad:24px}
+  .section{padding:72px 0}
+}
+</style>
+</head>
+<body>
+
+<header class="top" id="topo">
+  <div class="top-in">
+    <a class="brand" href="#topo">
+      <img src="assets/logo-nova.png" alt="Agência Eden">
+      <b>Eden</b>
+    </a>
+    <nav class="nav" id="nav">
+      <a href="#sobre">A agência</a>
+      <a href="#servicos">O que fazemos</a>
+      <a href="#processo">Como funciona</a>
+      <a href="#parceria">Parceria</a>
+      <a href="#faq">Dúvidas</a>
+    </nav>
+    <a class="btn top-cta" href="#aplicar" data-open-form><span>Aplicar agora</span></a>
+    <button class="burger" id="burger" aria-label="Abrir menu" aria-expanded="false"><i></i></button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ============ HERO ============ -->
+  <section class="hero">
+    <div class="wrap">
+      <span class="accent rise"></span>
+      <p class="hero-pre rise">Fature mais com a</p>
+      <h1 class="rise"><em>#1</em> Agência de Criadoras de Conteúdo</h1>
+      <p class="lede rise">Seu sucesso como criadora começa aqui.</p>
+      <div class="vsl rise">
+        <video id="vsl" src="assets/vsl-nova-logo.mp4" playsinline preload="metadata"></video>
+        <button class="vsl-play" id="vsl-play" type="button" aria-label="Assistir à apresentação">
+          <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M8 5.5v13l11-6.5-11-6.5z"/></svg>
+        </button>
+      </div>
+      <a class="btn rise" href="#aplicar" data-open-form><span>Aplicar agora</span></a>
+      <p class="hero-note rise"><span class="dot"></span>Vagas limitadas — seleção aberta este mês</p>
+    </div>
+  </section>
+
+  <!-- ============ STATS ============ -->
+  <section class="section" id="sobre">
+    <div class="wrap">
+      <span class="accent"></span>
+      <span class="kicker">A agência</span>
+      <h2 class="h2 rise">Resultados que falam <em>mais alto</em></h2>
+      <p class="lede rise">A Eden existe para transformar potencial em faturamento consistente. Operação profissional, time dedicado e processos testados.</p>
+      <!-- TROCAR: números reais da agência -->
+      <div class="stats stagger" style="margin-top:clamp(40px,4.4vw,56px)">
+        <div class="stat"><b>+30</b><span>criadoras gerenciadas</span></div>
+        <div class="stat"><b>7 dígitos</b><span>gerados em faturamento</span></div>
+        <div class="stat"><b>24/7</b><span>operação de chatting ativa</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SHOWCASE ============ -->
+  <section class="section" id="showcase">
+    <div class="wrap">
+      <div class="show">
+        <div class="show-txt rise">
+          <span class="accent"></span>
+          <span class="kicker">Showcase</span>
+          <!-- TROCAR: resultado real da criadora (números do print) -->
+          <p class="show-stat">18 assinantes → US$ 4,2 mil líquidos</p>
+          <p>A gente cresce o quanto cada assinante gasta — não só a contagem de fãs. Menos volume, mais faturamento por fã.</p>
+        </div>
+        <figure class="show-fig rise">
+          <!-- TROCAR: gravação do painel de estatísticas da sua criadora -->
+          <div class="show-card">
+            <video src="assets/showcase.mp4" poster="assets/showcase-stats.png"
+              autoplay muted loop playsinline preload="metadata"
+              aria-label="Gravação de tela do painel de estatísticas da criadora mostrando 18 assinantes e US$ 180 nas últimas 24 horas"></video>
+          </div>
+          <figcaption>Gravação de tela direto do painel de estatísticas da própria criadora, sem edição.</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ SERVIÇOS ============ -->
+  <section class="section" id="servicos">
+    <div class="wrap">
+      <span class="accent"></span>
+      <span class="kicker">O que fazemos</span>
+      <h2 class="h2 rise">Tudo que uma criadora precisa, <em>em um só lugar</em></h2>
+      <p class="lede rise">Você não precisa virar especialista em marketing, tráfego e vendas. Esse é o nosso trabalho.</p>
+      <div class="grid stagger">
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v18M3 12h18"/><circle cx="12" cy="12" r="9"/></svg></div>
+          <h3>Estratégia de conteúdo</h3>
+          <p>Planejamento semanal do que produzir, quando postar e como precificar. Você recebe o roteiro pronto — é só executar.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M3 17l6-6 4 4 8-8"/><path d="M14 7h7v7"/></svg></div>
+          <h3>Marketing &amp; crescimento</h3>
+          <p>Gestão de redes sociais, funis de aquisição e campanhas para levar tráfego qualificado até o seu perfil, todos os dias.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M21 12c0 4-4 7-9 7-1.2 0-2.3-.16-3.3-.46L3 20l1.6-4C3.6 14.9 3 13.5 3 12c0-4 4-7 9-7s9 3 9 7z"/></svg></div>
+          <h3>Chatting profissional</h3>
+          <p>Time treinado respondendo seus fãs 24/7 no seu tom de voz, maximizando vendas de conteúdo e mensalidades.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="16" rx="3"/><path d="M3 10h18M8 15h4"/></svg></div>
+          <h3>Gestão completa do perfil</h3>
+          <p>Postagens, promoções, precificação e organização da página. Seu perfil sempre ativo e otimizado, sem você tocar em nada.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7l8-4z"/><path d="M9 12l2 2 4-4"/></svg></div>
+          <h3>Privacidade &amp; proteção</h3>
+          <p>Bloqueio geográfico, monitoramento de vazamentos e remoção de conteúdo não autorizado. Sua imagem, protegida.</p>
+        </div>
+        <div class="card">
+          <div class="ico"><svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg></div>
+          <h3>Acompanhamento próximo</h3>
+          <p>Relatórios claros de faturamento, metas mensais e um gestor dedicado que acompanha sua evolução de perto.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PROCESSO ============ -->
+  <section class="section" id="processo">
+    <div class="wrap">
+      <span class="accent"></span>
+      <span class="kicker">Como funciona</span>
+      <h2 class="h2 rise">Da aplicação ao primeiro faturamento, <em>em 4 passos</em></h2>
+      <div class="grid grid--4 stagger">
+        <div class="card">
+          <span class="card-n">01</span>
+          <h3>Aplicação</h3>
+          <p>Você preenche o formulário em menos de 3 minutos. Sem compromisso e com total sigilo.</p>
+        </div>
+        <div class="card">
+          <span class="card-n">02</span>
+          <h3>Conversa inicial</h3>
+          <p>Nosso time entra em contato para entender seu momento, seus objetivos e seus limites.</p>
+        </div>
+        <div class="card">
+          <span class="card-n">03</span>
+          <h3>Plano personalizado</h3>
+          <p>Montamos a estratégia da sua marca: posicionamento, conteúdo, precificação e metas.</p>
+        </div>
+        <div class="card">
+          <span class="card-n">04</span>
+          <h3>Operação completa</h3>
+          <p>A Eden assume a gestão. Você cria, a gente faz o resto — e o faturamento aparece.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ PARCERIA ============ -->
+  <section class="section" id="parceria">
+    <div class="wrap">
+      <span class="accent"></span>
+      <span class="kicker">Modelos de parceria</span>
+      <h2 class="h2 rise">Transparência <em>desde o primeiro dia</em></h2>
+      <p class="lede rise">Sem taxas escondidas e sem contrato de aprisionamento. Você escolhe o modelo que faz sentido para o seu momento.</p>
+      <div class="tbl rise">
+        <table>
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Sozinha</th>
+              <th scope="col">Com a Eden</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr><td>Estratégia e posicionamento</td><td>Tentativa e erro</td><td>Plano validado por dezenas de perfis</td></tr>
+            <tr><td>Resposta aos fãs</td><td>Horas do seu dia, todo dia</td><td>Time profissional 24/7 no seu tom</td></tr>
+            <tr><td>Tráfego e divulgação</td><td>Crescimento lento e orgânico</td><td>Funis e campanhas rodando diariamente</td></tr>
+            <tr><td>Precificação e promoções</td><td>No feeling</td><td>Testada e otimizada por dados</td></tr>
+            <tr><td>Proteção de conteúdo</td><td>Por conta própria</td><td>Monitoramento e remoção ativa</td></tr>
+            <tr><td>Seu tempo livre</td><td>Consumido pela operação</td><td>Dedicado só a criar — e viver</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ FAQ ============ -->
+  <section class="section" id="faq">
+    <div class="wrap">
+      <span class="accent"></span>
+      <span class="kicker">Dúvidas frequentes</span>
+      <h2 class="h2 rise">O que toda criadora <em>pergunta antes de entrar</em></h2>
+      <div class="faq rise">
+        <details>
+          <summary>Preciso já ter um perfil ativo para aplicar?</summary>
+          <p class="a">Não. Trabalhamos tanto com criadoras experientes quanto com quem está começando do zero. O plano é montado para o seu momento.</p>
+        </details>
+        <details>
+          <summary>Preciso mostrar o rosto ou fazer conteúdo explícito?</summary>
+          <p class="a">Não. Seus limites são definidos por você e respeitados em contrato. Existem estratégias de alto faturamento para todos os níveis de exposição, incluindo perfis anônimos.</p>
+        </details>
+        <details>
+          <summary>Como funciona a divisão do faturamento?</summary>
+          <p class="a">Modelo de porcentagem sobre resultados: a agência só ganha quando você ganha. Os percentuais e condições são apresentados com total transparência na conversa inicial.</p>
+        </details>
+        <details>
+          <summary>Fico presa a um contrato longo?</summary>
+          <p class="a">Não trabalhamos com aprisionamento. O contrato define responsabilidades dos dois lados e pode ser encerrado com aviso prévio, sem multas abusivas.</p>
+        </details>
+        <details>
+          <summary>Quem responde meus fãs? Eles vão perceber?</summary>
+          <p class="a">Um time treinado no seu tom de voz, com diretrizes claras do que pode e do que não pode. Você aprova o estilo de comunicação antes de qualquer mensagem ser enviada.</p>
+        </details>
+        <details>
+          <summary>Minha privacidade está protegida?</summary>
+          <p class="a">Sim. Sigilo contratual, bloqueio geográfico de regiões que você escolher e monitoramento ativo contra vazamento de conteúdo.</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CTA FINAL ============ -->
+  <section class="end" id="aplicar">
+    <div class="wrap">
+      <span class="accent"></span>
+      <span class="kicker">Seleção aberta</span>
+      <h2 class="h2 rise">Pronta para o <em>próximo nível?</em></h2>
+      <p class="lede rise">Aplique agora. A conversa é sigilosa, sem compromisso — e pode ser o começo da sua virada.</p>
+      <a class="btn rise" href="#aplicar" data-open-form><span>Aplicar agora</span></a>
+      <p class="hero-note rise"><span class="dot"></span>Resposta em até 24h</p>
+    </div>
+  </section>
+
+</main>
+
+<footer class="foot">
+  <div class="foot-in">
+    <div class="foot-brand">
+      <img src="assets/logo-nova.png" alt="Agência Eden">
+      <p>Gestão completa para criadoras de conteúdo. Você cria, a gente cuida do resto.</p>
+    </div>
+    <div class="foot-cols">
+      <div class="foot-col">
+        <span class="kicker">Navegação</span>
+        <ul>
+          <li><a href="#sobre">A agência</a></li>
+          <li><a href="#servicos">O que fazemos</a></li>
+          <li><a href="#processo">Como funciona</a></li>
+          <li><a href="#faq">Dúvidas</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <span class="kicker">Contato</span>
+        <ul>
+          <!-- TROCAR: contatos reais -->
+          <li><a href="https://wa.me/5500000000000" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="https://instagram.com/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="mailto:contato@agenciaeden.com">E-mail</a></li>
+        </ul>
+      </div>
+      <div class="foot-col">
+        <span class="kicker">Legal</span>
+        <ul>
+          <li><a href="#">Termos de uso</a></li>
+          <li><a href="#">Privacidade</a></li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <div class="foot-base">
+    <p>© 2026 Agência Eden. Todos os direitos reservados. Conteúdo destinado a maiores de 18 anos.</p>
+  </div>
+</footer>
+
+<!-- ============ MODAL DE APLICAÇÃO ============ -->
+<div class="modal" id="modal" role="dialog" aria-modal="true" aria-labelledby="modal-titulo" hidden>
+  <div class="modal-bg" data-close></div>
+  <div class="modal-card">
+    <button class="modal-x" type="button" data-close aria-label="Fechar">✕</button>
+    <h3 id="modal-titulo">Aplique para a <em>Eden</em></h3>
+    <p class="modal-sub">Preencha o básico. Respondemos em até 12 horas, com total sigilo.</p>
+    <form id="form-aplicar" novalidate>
+      <div class="f-field">
+        <label for="f-nome">Nome completo</label>
+        <input id="f-nome" name="nome" type="text" placeholder="ex: Maria Santos" autocomplete="name" required>
+      </div>
+      <div class="f-field">
+        <label for="f-zap">WhatsApp</label>
+        <div class="f-phone">
+          <span class="ddd">+55</span>
+          <input id="f-zap" name="whatsapp" type="tel" inputmode="tel" placeholder="ex: 11 91234-5678" autocomplete="tel-national" required>
+        </div>
+      </div>
+      <div class="f-row">
+        <div class="f-field">
+          <label for="f-idade">Idade</label>
+          <input id="f-idade" name="idade" type="number" inputmode="numeric" min="18" max="99" placeholder="ex: 24" required>
+        </div>
+        <div class="f-field">
+          <label for="f-insta">Instagram</label>
+          <input id="f-insta" name="instagram" type="text" placeholder="@seuperfil" autocomplete="off" required>
+        </div>
+      </div>
+      <label class="f-consent">
+        <input id="f-ciente" type="checkbox" required>
+        <span>Ao enviar seus dados, você autoriza a Agência Eden a entrar em contato para verificar suas informações. Seus dados são tratados com sigilo e não são compartilhados com terceiros sem o seu consentimento.</span>
+      </label>
+      <button class="btn f-send" type="submit" disabled><span>Enviar aplicação</span></button>
+    </form>
+    <div class="f-ok">
+      <div class="ico-ok"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg></div>
+      <h4>Aplicação enviada!</h4>
+      <p>Recebemos seus dados. Nosso time vai analisar e te chamar no WhatsApp em até 12 horas.</p>
+    </div>
+  </div>
+</div>
+
+<script>
+(function(){
+  var top=document.getElementById('topo');
+  var burger=document.getElementById('burger');
+  burger.addEventListener('click',function(){
+    var open=top.classList.toggle('open');
+    burger.setAttribute('aria-expanded',open?'true':'false');
+  });
+  document.getElementById('nav').addEventListener('click',function(e){
+    if(e.target.tagName==='A'){top.classList.remove('open');burger.setAttribute('aria-expanded','false');}
+  });
+  window.addEventListener('scroll',function(){
+    top.classList.toggle('stuck',window.scrollY>8);
+  },{passive:true});
+
+  /* ===== VSL ===== */
+  var vsl=document.getElementById('vsl');
+  var vslPlay=document.getElementById('vsl-play');
+  if(vsl&&vslPlay){
+    vslPlay.addEventListener('click',function(){
+      vslPlay.style.display='none';
+      vsl.controls=true;
+      vsl.play();
+    });
+  }
+
+  /* ===== modal de aplicação ===== */
+  // Servido pelo server/ (Express): POST /api/aplicacoes grava no banco e
+  // aparece no /dashboard. Aberto como arquivo local, cai em modo demonstração.
+  var FORM_ENDPOINT=location.protocol==='file:'?'':'/api/aplicacoes';
+
+  var modal=document.getElementById('modal');
+  var form=document.getElementById('form-aplicar');
+  var ciente=document.getElementById('f-ciente');
+  var send=form.querySelector('.f-send');
+  var lastFocus=null;
+
+  function openModal(){
+    lastFocus=document.activeElement;
+    modal.hidden=false;
+    requestAnimationFrame(function(){modal.classList.add('open');});
+    document.body.classList.add('lock');
+    setTimeout(function(){document.getElementById('f-nome').focus();},300);
+  }
+  function closeModal(){
+    modal.classList.remove('open');
+    document.body.classList.remove('lock');
+    setTimeout(function(){modal.hidden=true;},300);
+    if(lastFocus)lastFocus.focus();
+  }
+  document.querySelectorAll('[data-open-form]').forEach(function(el){
+    el.addEventListener('click',function(e){e.preventDefault();openModal();});
+  });
+  modal.addEventListener('click',function(e){
+    if(e.target.closest('[data-close]'))closeModal();
+  });
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'&&!modal.hidden)closeModal();
+  });
+  ciente.addEventListener('change',function(){send.disabled=!ciente.checked;});
+  if(location.search.indexOf('form=1')>-1)openModal();
+
+  form.addEventListener('submit',function(e){
+    e.preventDefault();
+    if(!form.reportValidity())return;
+    var dados={
+      nome:form.nome.value.trim(),
+      whatsapp:'+55 '+form.whatsapp.value.trim(),
+      idade:form.idade.value.trim(),
+      instagram:form.instagram.value.trim(),
+      origem:location.pathname,
+      quando:new Date().toISOString()
+    };
+    send.disabled=true;
+    send.querySelector('span').textContent='Enviando…';
+    var done=function(){modal.classList.add('sent');};
+    var fail=function(){
+      send.disabled=false;
+      send.querySelector('span').textContent='Enviar aplicação';
+      alert('Não foi possível enviar agora. Tente de novo em instantes.');
+    };
+    if(FORM_ENDPOINT){
+      fetch(FORM_ENDPOINT,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(dados)})
+        .then(function(r){r.ok?done():fail();}).catch(fail);
+    }else{
+      console.log('[Eden] aplicação (modo demo):',dados);
+      setTimeout(done,500);
+    }
+  });
+
+  if('IntersectionObserver' in window){
+    var io=new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if(en.isIntersecting){en.target.classList.add('in');io.unobserve(en.target);}
+      });
+    },{rootMargin:'0px 0px -10% 0px',threshold:.08});
+    document.querySelectorAll('.rise,.stagger').forEach(function(el){io.observe(el);});
+  }else{
+    document.querySelectorAll('.rise,.stagger').forEach(function(el){el.classList.add('in');});
+  }
+})();
+</script>
+
+</body>
+</html>

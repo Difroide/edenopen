@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Eden · Dashboard</title>
+<meta name="robots" content="noindex,nofollow">
+<link rel="icon" href="/assets/logo-eden.png" type="image/png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;font-family:"Manrope",system-ui,sans-serif;background:#07130e;color:#f4efe2;
+  -webkit-font-smoothing:antialiased}
+:root{
+  --gold:#d4af37;--gold-soft:#e9cf7e;--gold-deep:#a8842a;
+  --grey:#a9b5ab;--line:rgba(212,175,55,.16);
+  --card:linear-gradient(170deg,#0e2419,#0b1d15);
+}
+a{color:var(--gold-soft)}
+
+/* ---- login ---- */
+.gate{min-height:100svh;display:grid;place-items:center;padding:20px}
+.gate-card{width:100%;max-width:360px;padding:34px 30px;border-radius:22px;background:var(--card);
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.3),0 30px 70px -30px rgba(0,0,0,.9);text-align:center}
+.gate-card img{width:84px;height:84px;border-radius:50%;margin:0 auto 16px;display:block;
+  box-shadow:0 0 0 1px rgba(212,175,55,.35)}
+.gate-card h1{margin:0;font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:600}
+.gate-card p{margin:8px 0 0;font-size:13.5px;color:var(--grey)}
+.gate-card input{width:100%;margin-top:18px;padding:13px 15px;border-radius:12px;border:0;
+  font:inherit;font-size:15px;color:#f4efe2;background:rgba(7,19,14,.6);
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.22);outline:none;text-align:center}
+.gate-card input:focus{box-shadow:inset 0 0 0 1.5px var(--gold)}
+.gate-err{display:none;margin-top:10px;font-size:13px;color:#ff8d8d}
+
+/* ---- botões ---- */
+.gbtn{display:inline-block;margin-top:16px;padding:14px 28px;border:0;border-radius:999px;
+  font:inherit;font-size:13.5px;font-weight:800;letter-spacing:.05em;text-transform:uppercase;
+  color:#120d02;cursor:pointer;
+  background:linear-gradient(160deg,#f3dc8e,#d4af37 45%,#a8842a);
+  box-shadow:0 10px 26px -10px rgba(212,175,55,.5)}
+.gbtn:hover{filter:brightness(1.06)}
+.sbtn{padding:9px 16px;border-radius:10px;border:0;font:inherit;font-size:13px;font-weight:700;
+  color:var(--gold-soft);background:rgba(212,175,55,.08);cursor:pointer;
+  box-shadow:inset 0 0 0 1px rgba(212,175,55,.3)}
+.sbtn:hover{background:rgba(212,175,55,.16)}
+
+/* ---- app ---- */
+.app{display:none;max-width:1100px;margin:0 auto;padding:28px 24px 60px}
+.bar{display:flex;align-items:center;gap:14px;flex-wrap:wrap}
+.bar img{width:46px;height:46px;border-radius:50%;box-shadow:0 0 0 1px rgba(212,175,55,.35)}
+.bar h1{margin:0;font-family:"Cormorant Garamond",serif;font-size:26px;font-weight:600;flex:1 1 auto}
+.bar h1 small{display:block;font-family:"Manrope";font-size:12px;font-weight:600;
+  letter-spacing:.14em;text-transform:uppercase;color:var(--gold)}
+.cards{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px;margin-top:24px}
+.kpi{padding:20px 22px;border-radius:16px;background:var(--card);
+  box-shadow:inset 0 0 0 1px var(--line)}
+.kpi b{display:block;font-family:"Manrope",sans-serif;font-size:32px;font-weight:800;line-height:1;font-variant-numeric:tabular-nums;
+  color:transparent;background:linear-gradient(115deg,var(--gold-soft),var(--gold) 60%,var(--gold-deep));
+  -webkit-background-clip:text;background-clip:text}
+.kpi span{display:block;margin-top:8px;font-size:12.5px;font-weight:600;color:var(--grey)}
+@media (max-width:820px){.cards{grid-template-columns:repeat(2,minmax(0,1fr))}}
+
+.tblwrap{margin-top:20px;border-radius:16px;overflow:auto;background:var(--card);
+  box-shadow:inset 0 0 0 1px var(--line)}
+table{border-collapse:collapse;width:100%;min-width:760px;font-size:14px}
+th,td{padding:13px 16px;text-align:left;border-bottom:1px solid rgba(212,175,55,.1);white-space:nowrap}
+thead th{font-size:11px;font-weight:800;letter-spacing:.12em;text-transform:uppercase;color:var(--gold)}
+td{color:var(--grey)}
+td.nome{color:#f4efe2;font-weight:700}
+tbody tr:hover td{background:rgba(212,175,55,.04)}
+tbody tr:last-child td{border-bottom:0}
+.vazio{padding:40px;text-align:center;color:var(--grey);font-size:14px}
+.del{border:0;background:none;color:rgba(255,141,141,.7);cursor:pointer;font-size:15px;padding:4px 8px}
+.del:hover{color:#ff8d8d}
+.atual{margin-top:14px;font-size:12px;color:var(--grey)}
+</style>
+</head>
+<body>
+
+<!-- ===== login ===== -->
+<div class="gate" id="gate">
+  <form class="gate-card" id="gate-form">
+    <img src="/assets/logo-eden.png" alt="Eden">
+    <h1>Dashboard Eden</h1>
+    <p>Acesso restrito ao time.</p>
+    <input id="gate-pass" type="password" placeholder="Senha de acesso" autocomplete="current-password" required>
+    <p class="gate-err" id="gate-err">Senha incorreta.</p>
+    <button class="gbtn" type="submit">Entrar</button>
+  </form>
+</div>
+
+<!-- ===== app ===== -->
+<div class="app" id="app">
+  <div class="bar">
+    <img src="/assets/logo-eden.png" alt="Eden">
+    <h1><small>Agência Eden</small>Aplicações recebidas</h1>
+    <button class="sbtn" id="b-refresh">↻ Atualizar</button>
+    <button class="sbtn" id="b-csv">⬇ CSV</button>
+    <button class="sbtn" id="b-sair">Sair</button>
+  </div>
+
+  <div class="cards">
+    <div class="kpi"><b id="k-total">–</b><span>Total de aplicações</span></div>
+    <div class="kpi"><b id="k-hoje">–</b><span>Hoje</span></div>
+    <div class="kpi"><b id="k-semana">–</b><span>Últimos 7 dias</span></div>
+    <div class="kpi"><b id="k-idade">–</b><span>Idade média</span></div>
+  </div>
+
+  <div class="tblwrap">
+    <table>
+      <thead><tr>
+        <th>Quando</th><th>Nome</th><th>Idade</th><th>WhatsApp</th><th>Instagram</th><th>Origem</th><th></th>
+      </tr></thead>
+      <tbody id="linhas"></tbody>
+    </table>
+    <div class="vazio" id="vazio" style="display:none">Nenhuma aplicação ainda. Assim que alguém preencher o formulário do site, aparece aqui.</div>
+  </div>
+  <p class="atual" id="atual"></p>
+</div>
+
+<script>
+(function(){
+  var gate=document.getElementById('gate'),appEl=document.getElementById('app');
+  var pass=sessionStorage.getItem('eden_pass')||'';
+
+  function headers(){return {Authorization:'Bearer '+pass};}
+
+  function fmtData(iso){
+    var d=new Date(iso);
+    return d.toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit'})+' '+
+           d.toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
+  }
+  function zapLink(v){
+    var n=(v||'').replace(/\D/g,'');
+    return n?'<a href="https://wa.me/'+n+'" target="_blank" rel="noopener">'+v+'</a>':'';
+  }
+  function instaLink(v){
+    if(!v)return'';
+    var h=v.replace(/^@/,'');
+    return '<a href="https://instagram.com/'+encodeURIComponent(h)+'" target="_blank" rel="noopener">@'+h+'</a>';
+  }
+  function esc(s){return String(s==null?'':s).replace(/[&<>"]/g,function(c){
+    return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];});}
+
+  var cache=[];
+  function render(lista){
+    cache=lista;
+    var agora=new Date(), hoje=agora.toDateString(), semana=agora.getTime()-7*864e5;
+    var nHoje=0,nSemana=0,somaIdade=0,comIdade=0;
+    var tb=document.getElementById('linhas'); tb.innerHTML='';
+    lista.forEach(function(r){
+      var d=new Date(r.criado_em);
+      if(d.toDateString()===hoje)nHoje++;
+      if(d.getTime()>=semana)nSemana++;
+      if(r.idade){somaIdade+=Number(r.idade);comIdade++;}
+      var tr=document.createElement('tr');
+      tr.innerHTML='<td>'+fmtData(r.criado_em)+'</td>'+
+        '<td class="nome">'+esc(r.nome)+'</td>'+
+        '<td>'+(r.idade||'')+'</td>'+
+        '<td>'+zapLink(esc(r.whatsapp))+'</td>'+
+        '<td>'+instaLink(esc(r.instagram))+'</td>'+
+        '<td>'+esc(r.origem||'')+'</td>'+
+        '<td><button class="del" data-id="'+r.id+'" title="Apagar">✕</button></td>';
+      tb.appendChild(tr);
+    });
+    document.getElementById('vazio').style.display=lista.length?'none':'block';
+    document.getElementById('k-total').textContent=lista.length;
+    document.getElementById('k-hoje').textContent=nHoje;
+    document.getElementById('k-semana').textContent=nSemana;
+    document.getElementById('k-idade').textContent=comIdade?Math.round(somaIdade/comIdade):'–';
+    document.getElementById('atual').textContent='Atualizado às '+agora.toLocaleTimeString('pt-BR');
+  }
+
+  function carregar(){
+    return fetch('/api/aplicacoes',{headers:headers()}).then(function(r){
+      if(r.status===401)throw new Error('auth');
+      return r.json();
+    }).then(render);
+  }
+
+  function entrar(){
+    gate.style.display='none';appEl.style.display='block';
+    carregar().catch(sair);
+    setInterval(function(){carregar().catch(function(){})},60000);
+  }
+  function sair(){
+    sessionStorage.removeItem('eden_pass');pass='';
+    appEl.style.display='none';gate.style.display='grid';
+  }
+
+  document.getElementById('gate-form').addEventListener('submit',function(e){
+    e.preventDefault();
+    pass=document.getElementById('gate-pass').value;
+    fetch('/api/aplicacoes',{headers:headers()}).then(function(r){
+      if(!r.ok)throw 0;
+      sessionStorage.setItem('eden_pass',pass);
+      return r.json();
+    }).then(function(l){entrar();render(l);})
+    .catch(function(){document.getElementById('gate-err').style.display='block';});
+  });
+
+  document.getElementById('b-refresh').addEventListener('click',function(){carregar().catch(sair)});
+  document.getElementById('b-sair').addEventListener('click',sair);
+  document.getElementById('b-csv').addEventListener('click',function(){
+    var cab=['quando','nome','idade','whatsapp','instagram','origem'];
+    var linhas=cache.map(function(r){
+      return [r.criado_em,r.nome,r.idade||'',r.whatsapp,r.instagram||'',r.origem||''].map(function(v){
+        return '"'+String(v).replace(/"/g,'""')+'"';}).join(';');
+    });
+    var blob=new Blob(['﻿'+cab.join(';')+'\n'+linhas.join('\n')],{type:'text/csv;charset=utf-8'});
+    var a=document.createElement('a');
+    a.href=URL.createObjectURL(blob);a.download='aplicacoes-eden.csv';a.click();
+    URL.revokeObjectURL(a.href);
+  });
+  document.getElementById('linhas').addEventListener('click',function(e){
+    var b=e.target.closest('.del');if(!b)return;
+    if(!confirm('Apagar esta aplicação?'))return;
+    fetch('/api/aplicacoes/'+b.dataset.id,{method:'DELETE',headers:headers()})
+      .then(function(){carregar()});
+  });
+
+  if(pass)entrar();
+})();
+</script>
+</body>
+</html>

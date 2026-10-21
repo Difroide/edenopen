@@ -1,0 +1,15 @@
+node_modules/
+.env
+server/data/
+
+# arquivos de trabalho — não fazem parte do site publicado
+tarefa.md
+vsl-copy.md
+vsl-eden.md
+forms.png
+image.png
+Logo Dourado*.png
+logo nova.png
+VSL NOVA LOGO.mp4
+assets/vsl.mp4
+assets/image.png
