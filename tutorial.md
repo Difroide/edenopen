@@ -2,7 +2,7 @@
 
 O site é um app Node (Express) que serve a landing, recebe o formulário em
 `POST /api/aplicacoes` e mostra as aplicações em `/dashboard`. Repo:
-**https://github.com/Difroide/agenciaeden**
+**https://github.com/Difroide/edenopen** (público)
 
 ---
 
@@ -43,10 +43,10 @@ usuário admin do painel.
 2. Nome do serviço: `site`
 3. Em **Source**, escolha **GitHub** e aponte para:
    - Owner: `Difroide`
-   - Repository: `agenciaeden`
+   - Repository: `edenopen`
    - Branch: `main`
-   - (Se o repo for privado, conecte a conta GitHub no EasyPanel em
-     Settings → GitHub e autorize o repositório)
+   - Caminho do build: `/`
+   - (O repo é público, não precisa conectar conta do GitHub)
 4. Em **Build**, deixe **Nixpacks** (ele detecta o Node pelo `package.json`
    e roda `npm start` sozinho — não precisa de Dockerfile)
 
