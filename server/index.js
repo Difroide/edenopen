@@ -24,7 +24,10 @@ if (process.env.DATABASE_URL) {
   });
   // conexão ociosa que cair não pode derrubar o processo
   pool.on('error', e => console.error('[eden] pool pg:', e.message));
-  const init = pool.query(`CREATE TABLE IF NOT EXISTS aplicacoes(
+  // falha de conexão no boot não pode crashar o app (unhandled rejection):
+  // guarda o erro, mantém o site no ar e tenta de novo a cada uso da API
+  let dbErr = null;
+  const criarTabela = () => pool.query(`CREATE TABLE IF NOT EXISTS aplicacoes(
     id SERIAL PRIMARY KEY,
     nome TEXT NOT NULL,
     whatsapp TEXT NOT NULL,
@@ -33,10 +36,17 @@ if (process.env.DATABASE_URL) {
     origem TEXT,
     user_agent TEXT,
     criado_em TIMESTAMPTZ NOT NULL DEFAULT now()
-  )`);
+  )`).then(() => { dbErr = null; })
+    .catch(e => { dbErr = e; console.error('[eden] ERRO ao conectar no Postgres:', e.message); });
+  let init = criarTabela();
+  const pronto = async () => {
+    await init;
+    if (dbErr) { init = criarTabela(); await init; }
+    if (dbErr) throw dbErr;
+  };
   store = {
     async add(a) {
-      await init;
+      await pronto();
       const r = await pool.query(
         `INSERT INTO aplicacoes(nome,whatsapp,idade,instagram,origem,user_agent)
          VALUES($1,$2,$3,$4,$5,$6) RETURNING id, criado_em`,
@@ -45,12 +55,12 @@ if (process.env.DATABASE_URL) {
       return r.rows[0];
     },
     async list() {
-      await init;
+      await pronto();
       const r = await pool.query(`SELECT * FROM aplicacoes ORDER BY criado_em DESC`);
       return r.rows;
     },
     async remove(id) {
-      await init;
+      await pronto();
       await pool.query(`DELETE FROM aplicacoes WHERE id = $1`, [id]);
     }
   };
