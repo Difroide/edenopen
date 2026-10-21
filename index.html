@@ -12,6 +12,24 @@
 <meta property="og:description" content="Você cria o conteúdo. A gente cuida da estratégia, do marketing e do faturamento.">
 <meta property="og:image" content="assets/logo-nova.png">
 
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '1417271649984636');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=1417271649984636&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
+
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500;600;700&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
@@ -779,7 +797,10 @@ body.lock{overflow:hidden}
     };
     send.disabled=true;
     send.querySelector('span').textContent='Enviando…';
-    var done=function(){modal.classList.add('sent');};
+    var done=function(){
+      modal.classList.add('sent');
+      if(typeof fbq==='function')fbq('track','Lead');
+    };
     var fail=function(){
       send.disabled=false;
       send.querySelector('span').textContent='Enviar aplicação';
