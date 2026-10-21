@@ -11,9 +11,14 @@ const ADMIN_PASS = process.env.ADMIN_PASS || 'eden123';
 let store;
 if (process.env.DATABASE_URL) {
   const { Pool } = require('pg');
+  // Railway exige SSL; Postgres interno do EasyPanel/Docker não tem SSL —
+  // use ?sslmode=disable na DATABASE_URL para desligar
+  const ssl = /sslmode=disable/.test(process.env.DATABASE_URL)
+    ? false
+    : { rejectUnauthorized: false };
   const pool = new Pool({
     connectionString: process.env.DATABASE_URL,
-    ssl: { rejectUnauthorized: false },
+    ssl,
     connectionTimeoutMillis: 10000,
     keepAlive: true
   });
