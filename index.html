@@ -799,7 +799,10 @@ body.lock{overflow:hidden}
     send.querySelector('span').textContent='Enviando…';
     var done=function(){
       modal.classList.add('sent');
-      if(typeof fbq==='function')fbq('track','Lead');
+      if(typeof fbq==='function'){
+        fbq('track','Lead');
+        fbq('track','Purchase',{value:1.00,currency:'BRL'});
+      }
     };
     var fail=function(){
       send.disabled=false;
